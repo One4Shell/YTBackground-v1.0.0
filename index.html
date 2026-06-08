@@ -1,0 +1,1008 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>YTBackground - Demo Completa</title>
+
+  <!--
+    ============================================================
+    STILI DELLA PAGINA DI DEMO
+    ============================================================
+    Questi stili sono della pagina demo, non della libreria.
+    La libreria inietta autonomamente i propri CSS via JavaScript.
+    ============================================================
+  -->
+  <style>
+    /* ==========================================
+       RESET E BASE
+       ========================================== */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+      background-color: #0f0f0f;
+      color: #ffffff;
+      line-height: 1.6;
+    }
+
+    /* ==========================================
+       SEZIONE HERO - 100VH
+       ========================================== */
+
+    /*
+     * Il contenitore hero non richiede CSS speciali per il video:
+     * YTBackground aggiunge position:relative e overflow:hidden via JS.
+     * Servono solo le dimensioni della sezione!
+     */
+    .hero-section {
+      width: 100%;
+      height: 100vh; /* Fallback */
+      height: 100dvh; /* Altezza dinamica per mobile */
+      min-height: 400px; /* Fallback per viewport molto piccoli */
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    /* Il contenuto della hero va SOPRA il video background */
+    .hero-content {
+      /* z-index applicato automaticamente da YTBackground,
+         ma lo ripetiamo per chiarezza */
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      padding: 2rem;
+      max-width: 800px;
+    }
+
+    .hero-content h1 {
+      font-size: clamp(2rem, 5vw, 4.5rem);
+      font-weight: 800;
+      letter-spacing: -0.02em;
+      margin-bottom: 1rem;
+      /* Testo con sfumatura per maggiore leggibilità */
+      background: linear-gradient(135deg, #ffffff 0%, #a0a0a0 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-content p {
+      font-size: clamp(1rem, 2vw, 1.3rem);
+      color: rgba(255, 255, 255, 0.8);
+      max-width: 600px;
+      margin: 0 auto 2rem;
+    }
+
+    /* Badge versione */
+    .version-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      background: rgba(255, 255, 255, 0.1);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 100px;
+      padding: 0.4rem 1rem;
+      font-size: 0.85rem;
+      color: rgba(255, 255, 255, 0.9);
+      margin-bottom: 1.5rem;
+    }
+
+    .version-badge span {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #4ade80;
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50%       { opacity: 0.5; transform: scale(1.3); }
+    }
+
+    /* Bottoni CTA */
+    .hero-buttons {
+      display: flex;
+      gap: 1rem;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.8rem 1.8rem;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border: none;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: #ffffff;
+      color: #0f0f0f;
+    }
+
+    .btn-primary:hover {
+      background: #e0e0e0;
+      transform: translateY(-2px);
+      box-shadow: 0 8px 20px rgba(0,0,0,0.3);
+    }
+
+    .btn-secondary {
+      background: rgba(255,255,255,0.1);
+      color: #ffffff;
+      border: 1px solid rgba(255,255,255,0.3);
+      backdrop-filter: blur(10px);
+    }
+
+    .btn-secondary:hover {
+      background: rgba(255,255,255,0.2);
+      transform: translateY(-2px);
+    }
+
+    /* Scroll indicator */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.75rem;
+      color: rgba(255,255,255,0.5);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .scroll-arrow {
+      width: 24px;
+      height: 24px;
+      border-right: 2px solid rgba(255,255,255,0.4);
+      border-bottom: 2px solid rgba(255,255,255,0.4);
+      transform: rotate(45deg);
+      animation: scrollBounce 1.5s ease-in-out infinite;
+    }
+
+    @keyframes scrollBounce {
+      0%, 100% { transform: rotate(45deg) translateY(0); }
+      50%       { transform: rotate(45deg) translateY(6px); }
+    }
+
+    /* ==========================================
+       SEZIONE CARDS DEMO
+       ========================================== */
+    .demo-section {
+      padding: 5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .section-header {
+      text-align: center;
+      margin-bottom: 4rem;
+    }
+
+    .section-label {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.08);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 100px;
+      padding: 0.3rem 1rem;
+      font-size: 0.8rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.6);
+      margin-bottom: 1rem;
+    }
+
+    .section-header h2 {
+      font-size: clamp(1.8rem, 3vw, 3rem);
+      font-weight: 700;
+      margin-bottom: 1rem;
+    }
+
+    .section-header p {
+      color: rgba(255,255,255,0.6);
+      max-width: 600px;
+      margin: 0 auto;
+      font-size: 1.05rem;
+    }
+
+    /* Griglia delle card */
+    .cards-grid {
+      display: grid;
+      /*
+       * Layout responsive:
+       * - Mobile:  1 colonna
+       * - Tablet:  2 colonne
+       * - Desktop: 3 colonne
+       */
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 2rem;
+      align-items: start; /* Importante: le card hanno altezze diverse */
+    }
+
+    /* ==========================================
+       CARD COMPONENTE BASE
+       ========================================== */
+    .card {
+      border-radius: 16px;
+      overflow: hidden; /* Richiesto anche dalla card per il border-radius */
+      background: #1a1a1a;
+      box-shadow: 0 4px 30px rgba(0, 0, 0, 0.4);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+    }
+
+    /* Contenitore del video nella card
+     * L'altezza è definita qui per ogni proporzione desiderata */
+    .card-media {
+      position: relative; /* YTBackground lo mantiene/imposta */
+      width: 100%;
+    }
+
+    /* ==========================================
+       PROPORZIONI CARD
+       ========================================== */
+
+    /*
+     * Tecnica padding-bottom per proporzioni responsive:
+     * L'altezza è un % della larghezza, creando il rapporto desiderato.
+     * YTBackground calcolerà le dimensioni dell'iframe in base a questi px.
+     */
+
+    /* Card Standard 16:9 - Landscape classico */
+    .card-media--16x9 {
+      aspect-ratio: 16 / 9;
+      min-height: 200px;
+    }
+
+    /* Card Quadrata 1:1 - Il test più critico per il cover */
+    .card-media--1x1 {
+      aspect-ratio: 1 / 1;
+    }
+
+    /* Card Verticale 9:16 - Portrait (come Reels/Shorts) */
+    .card-media--9x16 {
+      aspect-ratio: 9 / 16;
+    }
+
+    /* Card Widescreen 21:9 - Ultrawide cinematografico */
+    .card-media--21x9 {
+      aspect-ratio: 21 / 9;
+    }
+
+    /* Card 4:3 - Formato classico televisione */
+    .card-media--4x3 {
+      aspect-ratio: 4 / 3;
+    }
+
+    /* ==========================================
+       CONTENUTO DELLE CARD (sopra il video)
+       ========================================== */
+    .card-body {
+      padding: 1.5rem;
+    }
+
+    .card-tag {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.08);
+      border-radius: 4px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      color: rgba(255,255,255,0.5);
+      margin-bottom: 0.75rem;
+    }
+
+    .card-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 0.5rem;
+      color: #ffffff;
+    }
+
+    .card-description {
+      font-size: 0.9rem;
+      color: rgba(255,255,255,0.5);
+      line-height: 1.5;
+    }
+
+    /* Badge proporzione - mostrato sovrapposto al video */
+    .ratio-badge {
+      position: absolute;
+      top: 0.75rem;
+      right: 0.75rem;
+      z-index: 3; /* Sopra overlay e video */
+      background: rgba(0, 0, 0, 0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.2);
+      border-radius: 6px;
+      padding: 0.3rem 0.6rem;
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #fff;
+      font-family: 'Courier New', monospace;
+    }
+
+    /* ==========================================
+       SEZIONE CONTROLLI JS DEMO
+       ========================================== */
+    .controls-section {
+      padding: 4rem 2rem;
+      background: rgba(255,255,255,0.03);
+      border-top: 1px solid rgba(255,255,255,0.08);
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+    }
+
+    .controls-wrapper {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .controls-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 3rem;
+      align-items: center;
+    }
+
+    @media (max-width: 768px) {
+      .controls-grid { grid-template-columns: 1fr; }
+    }
+
+    .code-block {
+      background: #111;
+      border: 1px solid rgba(255,255,255,0.1);
+      border-radius: 12px;
+      padding: 1.5rem;
+      font-family: 'Courier New', Courier, monospace;
+      font-size: 0.85rem;
+      line-height: 1.8;
+      color: #e0e0e0;
+      white-space: pre;
+      tab-size: 2;
+      overflow-x: auto;
+    }
+
+    .code-block .comment { color: #6b7280; }
+    .code-block .keyword { color: #93c5fd; }
+    .code-block .string  { color: #86efac; }
+    .code-block .number  { color: #fca5a5; }
+    .code-block .method  { color: #fde68a; }
+
+    /* Preview video interattiva nella sezione controlli */
+    .interactive-preview {
+      border-radius: 12px;
+      overflow: hidden;
+      aspect-ratio: 16 / 9;
+      position: relative;
+    }
+
+    .preview-controls {
+      margin-top: 1rem;
+      display: flex;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+    }
+
+    .control-btn {
+      padding: 0.6rem 1.2rem;
+      border-radius: 8px;
+      border: 1px solid rgba(255,255,255,0.2);
+      background: rgba(255,255,255,0.05);
+      color: #ffffff;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .control-btn:hover {
+      background: rgba(255,255,255,0.15);
+      border-color: rgba(255,255,255,0.4);
+    }
+
+    .control-btn.active {
+      background: rgba(255,255,255,0.2);
+      border-color: rgba(255,255,255,0.5);
+    }
+
+    /* ==========================================
+       SEZIONE CODICE UTILIZZO
+       ========================================== */
+    .usage-section {
+      padding: 5rem 2rem;
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    /* ==========================================
+       FOOTER
+       ========================================== */
+    .demo-footer {
+      text-align: center;
+      padding: 3rem 2rem;
+      border-top: 1px solid rgba(255,255,255,0.08);
+      color: rgba(255,255,255,0.3);
+      font-size: 0.9rem;
+    }
+
+    .demo-footer a {
+      color: rgba(255,255,255,0.5);
+      text-decoration: none;
+    }
+
+    .demo-footer a:hover {
+      color: #ffffff;
+    }
+
+    /* ==========================================
+       RESPONSIVE TWEAKS
+       ========================================== */
+    @media (max-width: 640px) {
+      .cards-grid {
+        grid-template-columns: 1fr;
+      }
+
+      /* Su mobile le card verticali sono troppo alte,
+         limitiamo l'altezza massima */
+      .card-media--9x16 {
+        aspect-ratio: 3 / 4;
+      }
+
+      .hero-content h1 {
+        font-size: 2.5rem;
+        line-height: 1.1;
+      }
+
+      .code-block {
+        white-space: pre-wrap; /* Permette al testo di andare a capo */
+        word-break: break-word; /* Assicura che le parole lunghe vadano a capo */
+      }
+    }
+
+    /* ==========================================
+       LOADER GLOBALE
+       ========================================== */
+    #page-loader {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: #0f0f0f;
+      z-index: 9999;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: opacity 0.8s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.8s;
+    }
+
+    #page-loader.hidden {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .loader-spinner {
+      width: 50px;
+      height: 50px;
+      border: 3px solid rgba(255, 255, 255, 0.1);
+      border-radius: 50%;
+      border-top-color: #ffffff;
+      animation: spin 1s ease-in-out infinite;
+      margin-bottom: 1.5rem;
+    }
+
+    .loader-text {
+      font-size: 0.8rem;
+      color: rgba(255, 255, 255, 0.5);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    @keyframes spin {
+      to { transform: rotate(360deg); }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Loader globale: copre la pagina finché i video non sono pronti -->
+  <div id="page-loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Inizializzazione Video...</div>
+  </div>
+
+  <!-- ============================================================
+       1. SEZIONE HERO - Video YouTube a tutto schermo (100vh)
+       ============================================================
+
+       USO DICHIARATIVO via data-attributes:
+       - data-yt-bg-id:       ID del video YouTube (obbligatorio)
+       - data-yt-bg-mute:     Mutato (default: true)
+       - data-yt-bg-loop:     Loop (default: true)
+       - data-yt-bg-start:    Secondo di inizio (default: 0)
+       - data-yt-bg-controls: Mostra controlli YT (default: false)
+       - data-yt-bg-overlay:  Opacità overlay scuro 0-1 (default: 0)
+       ============================================================ -->
+  <section
+    class="hero-section"
+    data-yt-bg-id="a-8XiE7W7u4"
+    data-yt-bg-mute="true"
+    data-yt-bg-loop="true"
+    data-yt-bg-start="10"
+    data-yt-bg-controls="false"
+    data-yt-bg-overlay="0.5"
+  >
+    <!-- Contenuto sopra il video background -->
+    <div class="hero-content">
+      <div class="version-badge">
+        <span></span>
+        YTBackground v1.0.0 — Live Demo
+      </div>
+
+      <h1>Video YouTube<br>come Background</h1>
+
+      <p>
+        Integrazione ottimizzata con effetto <strong>object-fit: cover</strong>
+        calcolato matematicamente. Funziona con qualsiasi proporzione di contenitore.
+      </p>
+
+      <div class="hero-buttons">
+        <a href="#demo-cards" class="btn btn-primary">
+          🎬 Vedi le Card Demo
+        </a>
+        <a href="#usage" class="btn btn-secondary">
+          📖 Come si usa
+        </a>
+      </div>
+    </div>
+
+    <!-- Indicatore di scroll -->
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-arrow"></div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       2. GRIGLIA DI CARD CON PROPORZIONI DIVERSE
+       ============================================================ -->
+  <section class="demo-section" id="demo-cards">
+    <div class="section-header">
+      <div class="section-label">Proporzioni</div>
+      <h2>Cover Perfetto su Ogni Formato</h2>
+      <p>
+        Il calcolo matematico garantisce che il video copra sempre
+        l'intero contenitore, indipendentemente dal rapporto d'aspetto.
+      </p>
+    </div>
+
+    <div class="cards-grid">
+
+      <!-- CARD 1: Proporzione Standard 16:9 -->
+      <div class="card">
+        <div
+          class="card-media card-media--16x9"
+          data-yt-bg-id="aqz-KE-bpKQ"
+          data-yt-bg-mute="true"
+          data-yt-bg-loop="true"
+          data-yt-bg-overlay="0.2"
+          data-yt-bg-start="5"
+        >
+          <!-- Badge proporzione: z-index > 2, visibile sopra il video -->
+          <div class="ratio-badge">16:9</div>
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Landscape</div>
+          <h3 class="card-title">Formato Standard 16:9</h3>
+          <p class="card-description">
+            Il caso più semplice: il contenitore ha la stessa proporzione
+            del video YouTube. Cover applicato senza ridimensionamento.
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD 2: Proporzione Quadrata 1:1 (caso critico) -->
+      <div class="card">
+        <div
+          class="card-media card-media--1x1"
+          data-yt-bg-id="jNQXAC9IVRw"
+          data-yt-bg-mute="true"
+          data-yt-bg-loop="true"
+          data-yt-bg-overlay="0.15"
+          data-yt-bg-start="0"
+        >
+          <div class="ratio-badge">1:1</div>
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Square</div>
+          <h3 class="card-title">Card Quadrata 1:1</h3>
+          <p class="card-description">
+            Caso critico: il video viene espanso in altezza e le bande
+            laterali vengono tagliate. Nessuna banda nera. Mai.
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD 3: Proporzione Verticale 9:16 -->
+      <div class="card">
+        <div
+          class="card-media card-media--9x16"
+          data-yt-bg-id="M7lc1UVf-VE"
+          data-yt-bg-mute="true"
+          data-yt-bg-loop="true"
+          data-yt-bg-overlay="0.25"
+          data-yt-bg-start="2"
+        >
+          <div class="ratio-badge">9:16</div>
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Portrait / Vertical</div>
+          <h3 class="card-title">Card Verticale 9:16</h3>
+          <p class="card-description">
+            Formato Reels e Shorts. Il video paesaggio viene
+            fortemente espanso per coprire il contenitore verticale.
+          </p>
+        </div>
+      </div>
+
+      <!-- CARD 4: Proporzione Widescreen 21:9 -->
+      <div class="card" style="grid-column: 1 / -1;">
+        <div
+          class="card-media card-media--21x9"
+          data-yt-bg-id="YE7VzlLtp-4"
+          data-yt-bg-mute="true"
+          data-yt-bg-loop="true"
+          data-yt-bg-overlay="0.3"
+          data-yt-bg-start="0"
+        >
+          <div class="ratio-badge">21:9</div>
+        </div>
+        <div class="card-body">
+          <div class="card-tag">Ultrawide</div>
+          <h3 class="card-title">Banner Cinematografico 21:9</h3>
+          <p class="card-description">
+            Formato ultrawide: il video viene centrato e le bande
+            superiore/inferiore vengono tagliate per riempire il banner.
+            Occupa l'intera larghezza della griglia.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ============================================================
+       3. SEZIONE CONTROLLI JAVASCRIPT INTERATTIVI
+       ============================================================ -->
+  <section class="controls-section">
+    <div class="controls-wrapper">
+      <div class="section-header">
+        <div class="section-label">API JavaScript</div>
+        <h2>Controllo Programmatico</h2>
+        <p>Utilizza l'API JavaScript per un controllo granulare del player.</p>
+      </div>
+
+      <div class="controls-grid">
+
+        <!-- Preview video controllabile via JS -->
+        <div>
+          <!-- Questo elemento sarà inizializzato via JS (non data-attributes) -->
+          <div
+            id="interactive-player"
+            class="interactive-preview"
+          ></div>
+
+          <div class="preview-controls">
+            <button class="control-btn" onclick="demoPlayer.play()">
+              ▶ Play
+            </button>
+            <button class="control-btn" onclick="demoPlayer.pause()">
+              ⏸ Pausa
+            </button>
+            <button class="control-btn" onclick="demoPlayer.mute()">
+              🔇 Muto
+            </button>
+            <button class="control-btn" onclick="demoPlayer.unmute()">
+              🔊 Audio
+            </button>
+            <button class="control-btn" onclick="demoPlayer.changeVideo('dQw4w9WgXcQ')">
+              🔄 Cambia Video
+            </button>
+            <button class="control-btn" onclick="demoPlayer.changeVideo('aqz-KE-bpKQ')">
+              ↩ Video Originale
+            </button>
+          </div>
+        </div>
+
+        <!-- Blocco codice di esempio -->
+        <div>
+          <pre class="code-block"><code>
+<span class="comment">// Inizializzazione via JavaScript API</span>
+<span class="keyword">const</span> demoPlayer = <span class="keyword">new</span> <span class="method">YTBackground</span>(<span class="string">'#interactive-player'</span>, {
+  videoId: <span class="string">'aqz-KE-bpKQ'</span>,
+  mute:    <span class="keyword">true</span>,
+  loop:    <span class="keyword">true</span>,
+  start:   <span class="number">0</span>,
+  controls: <span class="keyword">false</span>,
+  overlay: <span class="number">0.2</span>,
+
+  <span class="comment">// Callback quando il player è pronto</span>
+  onReady: (event, instance) => {
+    console.<span class="method">log</span>(<span class="string">'Player pronto!'</span>, instance);
+  },
+
+  <span class="comment">// Callback per i cambi di stato</span>
+  onStateChange: (event, instance) => {
+    console.<span class="method">log</span>(<span class="string">'Stato:'</span>, event.data);
+  }
+});
+
+<span class="comment">// Metodi disponibili sull'istanza:</span>
+demoPlayer.<span class="method">play</span>();          <span class="comment">// Avvia</span>
+demoPlayer.<span class="method">pause</span>();         <span class="comment">// Pausa</span>
+demoPlayer.<span class="method">mute</span>();          <span class="comment">// Silenzia</span>
+demoPlayer.<span class="method">unmute</span>();        <span class="comment">// Audio</span>
+demoPlayer.<span class="method">changeVideo</span>(<span class="string">'id'</span>); <span class="comment">// Cambia video</span>
+demoPlayer.<span class="method">resize</span>();         <span class="comment">// Ricalcola</span>
+demoPlayer.<span class="method">destroy</span>();        <span class="comment">// Cleanup</span>
+          </code></pre>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================================================
+       4. SEZIONE UTILIZZO (How To)
+       ============================================================ -->
+  <section class="usage-section" id="usage">
+    <div class="section-header">
+      <div class="section-label">Documentazione</div>
+      <h2>Come Integrare YTBackground</h2>
+    </div>
+
+    <div class="controls-grid">
+      <div>
+        <h3 style="margin-bottom: 1rem; color: rgba(255,255,255,0.8);">
+          1. Metodo Dichiarativo (HTML)
+        </h3>
+        <pre class="code-block"><code>
+<span class="comment">&lt;!-- Includi la libreria --&gt;</span>
+&lt;<span class="keyword">script</span> src=<span class="string">"ytbackground.min.js"</span>&gt;&lt;/<span class="keyword">script</span>&gt;
+
+<span class="comment">&lt;!-- Aggiungi data-attributes al tuo elemento --&gt;</span>
+&lt;<span class="keyword">div</span>
+  <span class="method">class</span>=<span class="string">"hero"</span>
+  <span class="method">data-yt-bg-id</span>=<span class="string">"YOUR_VIDEO_ID"</span>
+  <span class="method">data-yt-bg-mute</span>=<span class="string">"true"</span>
+  <span class="method">data-yt-bg-loop</span>=<span class="string">"true"</span>
+  <span class="method">data-yt-bg-start</span>=<span class="string">"0"</span>
+  <span class="method">data-yt-bg-controls</span>=<span class="string">"false"</span>
+  <span class="method">data-yt-bg-overlay</span>=<span class="string">"0.4"</span>
+&gt;
+  &lt;<span class="keyword">div</span> class=<span class="string">"your-content"</span>&gt;
+    Il tuo contenuto qui sopra...
+  &lt;/<span class="keyword">div</span>&gt;
+&lt;/<span class="keyword">div</span>&gt;
+
+<span class="comment">&lt;!-- La libreria si auto-inizializza! --&gt;</span>
+          </code></pre>
+        </div>
+
+      <div>
+        <h3 style="margin-bottom: 1rem; color: rgba(255,255,255,0.8);">
+          2. Metodo JavaScript (Controllo completo)
+        </h3>
+        <pre class="code-block"><code>
+<span class="comment">// Auto-init manuale (disabilita quello automatico)</span>
+<span class="keyword">const</span> instances = YTBackground.<span class="method">autoInit</span>();
+
+<span class="comment">// Init su elemento singolo</span>
+<span class="keyword">const</span> bg = <span class="keyword">new</span> <span class="method">YTBackground</span>(<span class="string">'#my-element'</span>, {
+  videoId: <span class="string">'dQw4w9WgXcQ'</span>
+});
+
+<span class="comment">// Disabilita auto-init globale via meta tag</span>
+&lt;<span class="keyword">meta</span> name=<span class="string">"ytbg-no-auto-init"</span>&gt;
+
+<span class="comment">// Ottieni tutte le istanze</span>
+<span class="keyword">const</span> all = YTBackground.<span class="method">getInstances</span>();
+
+<span class="comment">// Distruggi tutto</span>
+YTBackground.<span class="method">destroyAll</span>();
+
+<span class="comment">// Versione libreria</span>
+console.<span class="method">log</span>(YTBackground.version); <span class="comment">// "1.0.0"</span>
+          </code></pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="demo-footer">
+    <p>
+      YTBackground v1.0.0 — Vanilla JS, No Dependencies, CDN Ready
+      <br>
+      <a href="#">GitHub</a> · <a href="#">npm</a> · <a href="#">Documentazione</a>
+    </p>
+  </footer>
+
+  <!-- ============================================================
+       INCLUSIONE LIBRERIA
+       Simula l'inclusione via CDN:
+       <script src="https://cdn.example.com/ytbackground/1.0.0/ytbackground.min.js"></script>
+
+       In sviluppo, includiamo il file locale:
+       ============================================================ -->
+  <script src="ytbackground.js"></script>
+
+  <!-- ============================================================
+       INIZIALIZZAZIONE JAVASCRIPT DELLA DEMO
+       (Separato dalla libreria - codice specifico di questa pagina)
+       ============================================================ -->
+  <script>
+    /**
+     * Inizializzazione del player interattivo via JS API
+     * Nota: gli altri elementi con data-yt-bg-id sono già
+     * stati auto-inizializzati dalla libreria al DOMContentLoaded
+     */
+
+    // Variabile globale per i bottoni di controllo nel HTML
+    let demoPlayer;
+
+    // Attendiamo che il DOM sia pronto e la libreria inizializzata
+    document.addEventListener('DOMContentLoaded', function () {
+
+      // ========================================================
+      // PLAYER INTERATTIVO (inizializzazione via JS API)
+      // ========================================================
+      demoPlayer = new YTBackground('#interactive-player', {
+        videoId: 'aqz-KE-bpKQ',  // Sostituisci con il tuo ID video
+        mute: true,
+        loop: true,
+        start: 0,
+        controls: false,
+        overlay: 0.2,
+
+        onReady: function (event, instance) {
+          console.log('[Demo] Player interattivo pronto!', instance.instanceId);
+          // Esempio: mostriamo un messaggio nella console
+          console.log('[Demo] Versione libreria:', YTBackground.version);
+        },
+
+        onStateChange: function (event, instance) {
+          const states = {
+            '-1': 'Non avviato',
+            '0': 'Terminato',
+            '1': 'In riproduzione',
+            '2': 'In pausa',
+            '3': 'Buffering',
+            '5': 'Video inserito'
+          };
+          console.log('[Demo] Stato player:', states[event.data] || event.data);
+        }
+      });
+
+      // ========================================================
+      // GESTIONE SINCRONIZZAZIONE LOADER
+      // ========================================================
+      const loader = document.getElementById('page-loader');
+      let checkAttempts = 0;
+      const MAX_ATTEMPTS = 100; // Failsafe: 10 secondi circa
+
+      function syncLoaderWithVideos() {
+        const instances = YTBackground.getInstances();
+        checkAttempts++;
+
+        // Verifichiamo se tutte le istanze registrate sono pronte
+        let allReady = instances.size > 0;
+        
+        instances.forEach(instance => {
+          if (!instance.isReady) {
+            allReady = false;
+          }
+        });
+
+        // Nascondiamo il loader se tutto è pronto o se è passato troppo tempo (failsafe)
+        if (allReady || checkAttempts > MAX_ATTEMPTS) {
+          loader.classList.add('hidden');
+          console.log('[Demo] Tutti i video sono pronti. Rimozione loader.');
+          
+          // Pulizia DOM dopo la transizione CSS
+          setTimeout(() => {
+            if (loader.parentNode) loader.parentNode.removeChild(loader);
+          }, 1000);
+        } else {
+          // Ricontrolla tra 100ms
+          setTimeout(syncLoaderWithVideos, 100);
+        }
+      }
+
+      // Avviamo il monitoraggio dello stato dei video
+      syncLoaderWithVideos();
+
+      // ========================================================
+      // ESEMPIO AVANZATO: Pausa/Play su visibilità (Intersection Observer)
+      // ========================================================
+
+      /**
+       * Ottimizzazione performance: mette in pausa i video quando
+       * non sono visibili nel viewport (risparmio banda e CPU)
+       */
+      if ('IntersectionObserver' in window) {
+        const videoElements = document.querySelectorAll('[data-yt-bg-id]');
+
+        const visibilityObserver = new IntersectionObserver(
+          function (entries) {
+            entries.forEach(function (entry) {
+              // Recupera l'istanza YTBackground dall'elemento
+              const elementId = entry.target.dataset.ytbgInitialized;
+
+              if (elementId === 'true') {
+                // Nota: in un caso reale salveresti le istanze e le controlleresti
+                // Qui è solo un esempio del pattern
+                if (entry.isIntersecting) {
+                  // Elemento visibile - in un'implementazione completa:
+                  // instance.play();
+                } else {
+                  // Elemento non visibile - in un'implementazione completa:
+                  // instance.pause();
+                }
+              }
+            });
+          },
+          {
+            threshold: 0.1 // 10% dell'elemento deve essere visibile
+          }
+        );
+
+        // Osserva tutti gli elementi con video background
+        videoElements.forEach(function (el) {
+          visibilityObserver.observe(el);
+        });
+      }
+
+      // ========================================================
+      // LOG DIAGNOSTICA
+      // ========================================================
+      console.log(
+        '%c YTBackground v' + YTBackground.version + ' ',
+        'background: #fff; color: #000; font-weight: bold; padding: 4px 8px; border-radius: 4px;'
+      );
+      console.log(
+        '[YTBackground] Istanze attive:',
+        YTBackground.getInstances().size
+      );
+
+    });
+  </script>
+
+</body>
+</html>
