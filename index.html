@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="it">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YTBackground - Demo Completa</title>
+  <title>YTBackground - Complete Demo</title>
 
   <!--
     ============================================================
@@ -535,14 +535,14 @@
   <!-- Loader globale: copre la pagina finché i video non sono pronti -->
   <div id="page-loader">
     <div class="loader-spinner"></div>
-    <div class="loader-text">Inizializzazione Video...</div>
+    <div class="loader-text">Initializing Video...</div>
   </div>
 
   <!-- ============================================================
-       1. SEZIONE HERO - Video YouTube a tutto schermo (100vh)
+       1. HERO SECTION - Full screen YouTube Video (100vh)
        ============================================================
 
-       USO DICHIARATIVO via data-attributes:
+       DECLARATIVE USE via data-attributes:
        - data-yt-bg-id:       ID del video YouTube (obbligatorio)
        - data-yt-bg-mute:     Mutato (default: true)
        - data-yt-bg-loop:     Loop (default: true)
@@ -566,19 +566,19 @@
         YTBackground v1.0.0 — Live Demo
       </div>
 
-      <h1>Video YouTube<br>come Background</h1>
+      <h1>YouTube Video<br>as Background</h1>
 
       <p>
-        Integrazione ottimizzata con effetto <strong>object-fit: cover</strong>
-        calcolato matematicamente. Funziona con qualsiasi proporzione di contenitore.
+        Optimized integration with <strong>object-fit: cover</strong> effect
+        calculated mathematically. Works with any container aspect ratio.
       </p>
 
       <div class="hero-buttons">
         <a href="#demo-cards" class="btn btn-primary">
-          🎬 Vedi le Card Demo
+          🎬 See Demo Cards
         </a>
         <a href="#usage" class="btn btn-secondary">
-          📖 Come si usa
+          📖 How to Use
         </a>
       </div>
     </div>
@@ -591,15 +591,15 @@
   </section>
 
   <!-- ============================================================
-       2. GRIGLIA DI CARD CON PROPORZIONI DIVERSE
+       2. CARD GRID WITH DIFFERENT ASPECT RATIOS
        ============================================================ -->
   <section class="demo-section" id="demo-cards">
     <div class="section-header">
-      <div class="section-label">Proporzioni</div>
-      <h2>Cover Perfetto su Ogni Formato</h2>
+      <div class="section-label">Aspect Ratios</div>
+      <h2>Perfect Cover on Every Format</h2>
       <p>
-        Il calcolo matematico garantisce che il video copra sempre
-        l'intero contenitore, indipendentemente dal rapporto d'aspetto.
+        The mathematical calculation ensures the video always covers
+        the entire container, regardless of the aspect ratio.
       </p>
     </div>
 
@@ -620,10 +620,10 @@
         </div>
         <div class="card-body">
           <div class="card-tag">Landscape</div>
-          <h3 class="card-title">Formato Standard 16:9</h3>
+          <h3 class="card-title">Standard 16:9 Format</h3>
           <p class="card-description">
-            Il caso più semplice: il contenitore ha la stessa proporzione
-            del video YouTube. Cover applicato senza ridimensionamento.
+            The simplest case: the container has the same aspect ratio
+            as the YouTube video. Cover applied without resizing.
           </p>
         </div>
       </div>
@@ -642,10 +642,10 @@
         </div>
         <div class="card-body">
           <div class="card-tag">Square</div>
-          <h3 class="card-title">Card Quadrata 1:1</h3>
+          <h3 class="card-title">1:1 Square Card</h3>
           <p class="card-description">
-            Caso critico: il video viene espanso in altezza e le bande
-            laterali vengono tagliate. Nessuna banda nera. Mai.
+            Critical case: the video is expanded in height and the side
+            bars are cropped. No black bars. Ever.
           </p>
         </div>
       </div>
@@ -664,10 +664,10 @@
         </div>
         <div class="card-body">
           <div class="card-tag">Portrait / Vertical</div>
-          <h3 class="card-title">Card Verticale 9:16</h3>
+          <h3 class="card-title">9:16 Vertical Card</h3>
           <p class="card-description">
-            Formato Reels e Shorts. Il video paesaggio viene
-            fortemente espanso per coprire il contenitore verticale.
+            Reels and Shorts format. The landscape video is
+            strongly expanded to cover the vertical container.
           </p>
         </div>
       </div>
@@ -686,11 +686,11 @@
         </div>
         <div class="card-body">
           <div class="card-tag">Ultrawide</div>
-          <h3 class="card-title">Banner Cinematografico 21:9</h3>
+          <h3 class="card-title">21:9 Cinematic Banner</h3>
           <p class="card-description">
-            Formato ultrawide: il video viene centrato e le bande
-            superiore/inferiore vengono tagliate per riempire il banner.
-            Occupa l'intera larghezza della griglia.
+            Ultrawide format: the video is centered and the top/bottom
+            bars are cropped to fill the banner.
+            Occupies the full width of the grid.
           </p>
         </div>
       </div>
@@ -699,14 +699,14 @@
   </section>
 
   <!-- ============================================================
-       3. SEZIONE CONTROLLI JAVASCRIPT INTERATTIVI
+       3. INTERACTIVE JAVASCRIPT CONTROLS SECTION
        ============================================================ -->
   <section class="controls-section">
     <div class="controls-wrapper">
       <div class="section-header">
         <div class="section-label">API JavaScript</div>
-        <h2>Controllo Programmatico</h2>
-        <p>Utilizza l'API JavaScript per un controllo granulare del player.</p>
+        <h2>Programmatic Control</h2>
+        <p>Use the JavaScript API for granular control of the player.</p>
       </div>
 
       <div class="controls-grid">
@@ -724,19 +724,19 @@
               ▶ Play
             </button>
             <button class="control-btn" onclick="demoPlayer.pause()">
-              ⏸ Pausa
+              ⏸ Pause
             </button>
             <button class="control-btn" onclick="demoPlayer.mute()">
-              🔇 Muto
+              🔇 Mute
             </button>
             <button class="control-btn" onclick="demoPlayer.unmute()">
-              🔊 Audio
+              🔊 Unmute
             </button>
             <button class="control-btn" onclick="demoPlayer.changeVideo('dQw4w9WgXcQ')">
-              🔄 Cambia Video
+              🔄 Change Video
             </button>
             <button class="control-btn" onclick="demoPlayer.changeVideo('aqz-KE-bpKQ')">
-              ↩ Video Originale
+              ↩ Original Video
             </button>
           </div>
         </div>
@@ -755,23 +755,23 @@
 
   <span class="comment">// Callback quando il player è pronto</span>
   onReady: (event, instance) => {
-    console.<span class="method">log</span>(<span class="string">'Player pronto!'</span>, instance);
+    console.<span class="method">log</span>(<span class="string">'Player ready!'</span>, instance);
   },
 
   <span class="comment">// Callback per i cambi di stato</span>
   onStateChange: (event, instance) => {
-    console.<span class="method">log</span>(<span class="string">'Stato:'</span>, event.data);
+    console.<span class="method">log</span>(<span class="string">'State:'</span>, event.data);
   }
 });
 
 <span class="comment">// Metodi disponibili sull'istanza:</span>
-demoPlayer.<span class="method">play</span>();          <span class="comment">// Avvia</span>
-demoPlayer.<span class="method">pause</span>();         <span class="comment">// Pausa</span>
-demoPlayer.<span class="method">mute</span>();          <span class="comment">// Silenzia</span>
-demoPlayer.<span class="method">unmute</span>();        <span class="comment">// Audio</span>
-demoPlayer.<span class="method">changeVideo</span>(<span class="string">'id'</span>); <span class="comment">// Cambia video</span>
-demoPlayer.<span class="method">resize</span>();         <span class="comment">// Ricalcola</span>
-demoPlayer.<span class="method">destroy</span>();        <span class="comment">// Cleanup</span>
+demoPlayer.<span class="method">play</span>();          <span class="comment">// Play</span>
+demoPlayer.<span class="method">pause</span>();         <span class="comment">// Pause</span>
+demoPlayer.<span class="method">mute</span>();          <span class="comment">// Mute</span>
+demoPlayer.<span class="method">unmute</span>();        <span class="comment">// Unmute</span>
+demoPlayer.<span class="method">changeVideo</span>(<span class="string">'id'</span>); <span class="comment">// Change video</span>
+demoPlayer.<span class="method">resize</span>();         <span class="comment">// Resize</span>
+demoPlayer.<span class="method">destroy</span>();        <span class="comment">// Destroy</span>
           </code></pre>
         </div>
 
@@ -780,18 +780,18 @@ demoPlayer.<span class="method">destroy</span>();        <span class="comment">/
   </section>
 
   <!-- ============================================================
-       4. SEZIONE UTILIZZO (How To)
+       4. USAGE SECTION (How To)
        ============================================================ -->
   <section class="usage-section" id="usage">
     <div class="section-header">
-      <div class="section-label">Documentazione</div>
-      <h2>Come Integrare YTBackground</h2>
+      <div class="section-label">Documentation</div>
+      <h2>How to Integrate YTBackground</h2>
     </div>
 
     <div class="controls-grid">
       <div>
         <h3 style="margin-bottom: 1rem; color: rgba(255,255,255,0.8);">
-          1. Metodo Dichiarativo (HTML)
+          1. Declarative Method (HTML)
         </h3>
         <pre class="code-block"><code>
 <span class="comment">&lt;!-- Includi la libreria --&gt;</span>
@@ -818,7 +818,7 @@ demoPlayer.<span class="method">destroy</span>();        <span class="comment">/
 
       <div>
         <h3 style="margin-bottom: 1rem; color: rgba(255,255,255,0.8);">
-          2. Metodo JavaScript (Controllo completo)
+          2. JavaScript Method (Full Control)
         </h3>
         <pre class="code-block"><code>
 <span class="comment">// Auto-init manuale (disabilita quello automatico)</span>
@@ -850,38 +850,38 @@ console.<span class="method">log</span>(YTBackground.version); <span class="comm
     <p>
       YTBackground v1.0.0 — Vanilla JS, No Dependencies, CDN Ready
       <br>
-      <a href="#">GitHub</a> · <a href="#">npm</a> · <a href="#">Documentazione</a>
+      <a href="#">GitHub</a> · <a href="#">npm</a> · <a href="#">Documentation</a>
     </p>
   </footer>
 
   <!-- ============================================================
-       INCLUSIONE LIBRERIA
-       Simula l'inclusione via CDN:
+       LIBRARY INCLUSION
+       Simulate inclusion via CDN:
        <script src="https://cdn.example.com/ytbackground/1.0.0/ytbackground.min.js"></script>
 
-       In sviluppo, includiamo il file locale:
+       In development, we include the local file:
        ============================================================ -->
   <script src="ytbackground.js"></script>
 
   <!-- ============================================================
-       INIZIALIZZAZIONE JAVASCRIPT DELLA DEMO
-       (Separato dalla libreria - codice specifico di questa pagina)
+       DEMO JAVASCRIPT INITIALIZATION
+       (Separate from the library - specific code for this page)
        ============================================================ -->
   <script>
     /**
-     * Inizializzazione del player interattivo via JS API
-     * Nota: gli altri elementi con data-yt-bg-id sono già
-     * stati auto-inizializzati dalla libreria al DOMContentLoaded
+     * Interactive player initialization via JS API
+     * Note: other elements with data-yt-bg-id are already
+     * auto-initialized by the library on DOMContentLoaded
      */
 
-    // Variabile globale per i bottoni di controllo nel HTML
+    // Global variable for the control buttons in HTML
     let demoPlayer;
 
     // Attendiamo che il DOM sia pronto e la libreria inizializzata
     document.addEventListener('DOMContentLoaded', function () {
 
       // ========================================================
-      // PLAYER INTERATTIVO (inizializzazione via JS API)
+      // INTERACTIVE PLAYER (initialization via JS API)
       // ========================================================
       demoPlayer = new YTBackground('#interactive-player', {
         videoId: 'aqz-KE-bpKQ',  // Sostituisci con il tuo ID video
@@ -892,26 +892,26 @@ console.<span class="method">log</span>(YTBackground.version); <span class="comm
         overlay: 0.2,
 
         onReady: function (event, instance) {
-          console.log('[Demo] Player interattivo pronto!', instance.instanceId);
+          console.log('[Demo] Interactive player ready!', instance.instanceId);
           // Esempio: mostriamo un messaggio nella console
-          console.log('[Demo] Versione libreria:', YTBackground.version);
+          console.log('[Demo] Library version:', YTBackground.version);
         },
 
         onStateChange: function (event, instance) {
           const states = {
-            '-1': 'Non avviato',
-            '0': 'Terminato',
-            '1': 'In riproduzione',
-            '2': 'In pausa',
+            '-1': 'Unstarted',
+            '0': 'Ended',
+            '1': 'Playing',
+            '2': 'Paused',
             '3': 'Buffering',
-            '5': 'Video inserito'
+            '5': 'Cued'
           };
-          console.log('[Demo] Stato player:', states[event.data] || event.data);
+          console.log('[Demo] Player state:', states[event.data] || event.data);
         }
       });
 
       // ========================================================
-      // GESTIONE SINCRONIZZAZIONE LOADER
+      // LOADER SYNCHRONIZATION MANAGEMENT
       // ========================================================
       const loader = document.getElementById('page-loader');
       let checkAttempts = 0;
@@ -933,7 +933,7 @@ console.<span class="method">log</span>(YTBackground.version); <span class="comm
         // Nascondiamo il loader se tutto è pronto o se è passato troppo tempo (failsafe)
         if (allReady || checkAttempts > MAX_ATTEMPTS) {
           loader.classList.add('hidden');
-          console.log('[Demo] Tutti i video sono pronti. Rimozione loader.');
+          console.log('[Demo] All videos are ready. Removing loader.');
           
           // Pulizia DOM dopo la transizione CSS
           setTimeout(() => {
@@ -949,12 +949,12 @@ console.<span class="method">log</span>(YTBackground.version); <span class="comm
       syncLoaderWithVideos();
 
       // ========================================================
-      // ESEMPIO AVANZATO: Pausa/Play su visibilità (Intersection Observer)
+      // ADVANCED EXAMPLE: Pause/Play on visibility (Intersection Observer)
       // ========================================================
 
       /**
-       * Ottimizzazione performance: mette in pausa i video quando
-       * non sono visibili nel viewport (risparmio banda e CPU)
+       * Performance optimization: pauses videos when they are 
+       * not visible in the viewport (saves bandwidth and CPU)
        */
       if ('IntersectionObserver' in window) {
         const videoElements = document.querySelectorAll('[data-yt-bg-id]');
@@ -962,17 +962,17 @@ console.<span class="method">log</span>(YTBackground.version); <span class="comm
         const visibilityObserver = new IntersectionObserver(
           function (entries) {
             entries.forEach(function (entry) {
-              // Recupera l'istanza YTBackground dall'elemento
+              // Get the YTBackground instance from the element
               const elementId = entry.target.dataset.ytbgInitialized;
 
               if (elementId === 'true') {
-                // Nota: in un caso reale salveresti le istanze e le controlleresti
-                // Qui è solo un esempio del pattern
+                // Note: in a real case you would save the instances and control them
+                // This is just an example of the pattern
                 if (entry.isIntersecting) {
-                  // Elemento visibile - in un'implementazione completa:
+                  // Element visible - in a full implementation:
                   // instance.play();
                 } else {
-                  // Elemento non visibile - in un'implementazione completa:
+                  // Element not visible - in a full implementation:
                   // instance.pause();
                 }
               }
@@ -983,21 +983,21 @@ console.<span class="method">log</span>(YTBackground.version); <span class="comm
           }
         );
 
-        // Osserva tutti gli elementi con video background
+        // Observe all elements with video backgrounds
         videoElements.forEach(function (el) {
           visibilityObserver.observe(el);
         });
       }
 
       // ========================================================
-      // LOG DIAGNOSTICA
+      // DIAGNOSTIC LOG
       // ========================================================
       console.log(
         '%c YTBackground v' + YTBackground.version + ' ',
         'background: #fff; color: #000; font-weight: bold; padding: 4px 8px; border-radius: 4px;'
       );
       console.log(
-        '[YTBackground] Istanze attive:',
+        '[YTBackground] Active instances:',
         YTBackground.getInstances().size
       );
 
